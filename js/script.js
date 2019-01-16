@@ -1,6 +1,12 @@
+/************************************************************************************
+Focus on page load
+************************************************************************************/
 // Sets the focus on input at page load
 $('input#name').focus();
 
+/************************************************************************************
+Job role section
+************************************************************************************/
 // If JavaScript is active, the other-title input will be hidden
 // If JavaScript is not active, the input will be shown -> obtrusive javscript principle
 const inputOtherTitle = $('input#other-title');
@@ -36,6 +42,7 @@ $('select#design').change(() => {
     design === 'js puns' ? hideHeartJS() : hideJSPuns();
 })
 
+// Utility functions for the above event handler
 const hideHeartJS = () => {
     $('select#color').val('cornflowerblue');
     $('option[value=tomato]').hide();
