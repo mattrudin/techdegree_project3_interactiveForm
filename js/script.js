@@ -9,6 +9,49 @@ inputOtherTitle.hide();
 // Eventhandlet for the job role selection:
 // If other is selected, the user shall see the hidden "other title" field
 $('select#title').on('change', (event) => {
-    let jobRoleInput = $(event.target).val();
+    const jobRoleInput = $(event.target).val();
     jobRoleInput === 'other' ? inputOtherTitle.show() : inputOtherTitle.hide();
 });
+
+/************************************************************************************
+T-Shirt info section
+************************************************************************************/
+// The following function hides all t-shirts, because no design is selected 
+const initialTshirt = () => {
+    $('select#color').val(null);
+    $('option[value=tomato]').hide();
+    $('option[value=steelblue]').hide();
+    $('option[value=dimgrey').hide();
+    $('option[value=cornflowerblue]').hide();
+    $('option[value=darkslategrey]').hide();
+    $('option[value=gold]').hide();
+}
+
+initialTshirt();
+
+// Eventhandler for the t-shirt design
+$('select#design').change(() => {
+    const design = $(event.target).val();
+    $('option:contains("Select Theme")').hide();
+    design === 'js puns' ? hideHeartJS() : hideJSPuns();
+})
+
+const hideHeartJS = () => {
+    $('select#color').val('cornflowerblue');
+    $('option[value=tomato]').hide();
+    $('option[value=steelblue]').hide();
+    $('option[value=dimgrey').hide();
+    $('option[value=cornflowerblue]').show();
+    $('option[value=darkslategrey]').show();
+    $('option[value=gold]').show();
+}
+
+const hideJSPuns = () => {
+    $('select#color').val('tomato');
+    $('option[value=tomato]').show();
+    $('option[value=steelblue]').show();
+    $('option[value=dimgrey').show();
+    $('option[value=cornflowerblue]').hide();
+    $('option[value=darkslategrey]').hide();
+    $('option[value=gold]').hide();
+}
