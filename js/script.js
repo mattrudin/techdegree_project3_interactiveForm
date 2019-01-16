@@ -36,6 +36,7 @@ const initialTshirt = () => {
 initialTshirt();
 
 // Eventhandler for the t-shirt design
+// Hides also the "select theme" option
 $('select#design').change(() => {
     const design = $(event.target).val();
     $('option:contains("Select Theme")').hide();
@@ -62,3 +63,23 @@ const hideJSPuns = () => {
     $('option[value=darkslategrey]').hide();
     $('option[value=gold]').hide();
 }
+
+/************************************************************************************
+Register for activities section
+************************************************************************************/
+$('fieldset.activities').change(() => {
+    const jsFramework = $("input[name=js-frameworks]");
+    const express = $("input[name=express]");
+    const jsLibs = $("input[name=js-libs]");
+    const node = $("input[name=node]");
+    
+    const isJSFramework = jsFramework.is(":checked");
+    const isExpress = express.is(":checked")
+    const isJSLibs = jsLibs.is(":checked");
+    const isNode = node.is(":checked");
+
+    isJSFramework ? express.attr('disabled', true) : express.removeAttr('disabled');
+    isExpress ? jsFramework.attr('disabled', true) : jsFramework.removeAttr('disabled');
+    isJSLibs ? node.attr('disabled', true) : node.removeAttr('disabled');
+    isNode ? jsLibs.attr('disabled', true) : jsLibs.removeAttr('disabled');
+})
