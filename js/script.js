@@ -67,19 +67,32 @@ const hideJSPuns = () => {
 /************************************************************************************
 Register for activities section
 ************************************************************************************/
-$('fieldset.activities').change(() => {
-    const jsFramework = $("input[name=js-frameworks]");
-    const express = $("input[name=express]");
-    const jsLibs = $("input[name=js-libs]");
-    const node = $("input[name=node]");
-    
-    const isJSFramework = jsFramework.is(":checked");
-    const isExpress = express.is(":checked")
-    const isJSLibs = jsLibs.is(":checked");
-    const isNode = node.is(":checked");
-
+// Checkbox checker function
+const checkBoxChecker = ({ jsFramework, express, jsLibs, node, isJSFramework, isExpress, isJSLibs, isNode }) => {
     isJSFramework ? express.attr('disabled', true) : express.removeAttr('disabled');
     isExpress ? jsFramework.attr('disabled', true) : jsFramework.removeAttr('disabled');
     isJSLibs ? node.attr('disabled', true) : node.removeAttr('disabled');
     isNode ? jsLibs.attr('disabled', true) : jsLibs.removeAttr('disabled');
+}
+// Running total implementation
+
+$('fieldset.activities').change(() => {
+    const elements = {
+        mainCon: $("input[name=all]"),
+        jsFramework: $("input[name=js-frameworks]"),
+        express: $("input[name=express]"),
+        jsLibs: $("input[name=js-libs]"),
+        node: $("input[name=node]"),
+    }
+
+    const booleans = {
+        isMainConf: elements.mainCon.is(":checked"),
+        isJSFramework: elements.jsFramework.is(":checked"),
+        isExpress: elements.express.is(":checked"),
+        isJSLibs: elements.jsLibs.is(":checked"),
+        isNode: elements.node.is(":checked"),
+    }
+
+    checkBoxChecker({ ...elements, ...booleans });
 })
+
