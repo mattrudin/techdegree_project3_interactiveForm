@@ -74,8 +74,21 @@ const checkBoxChecker = ({ jsFramework, express, jsLibs, node, isJSFramework, is
     isJSLibs ? node.attr('disabled', true) : node.removeAttr('disabled');
     isNode ? jsLibs.attr('disabled', true) : jsLibs.removeAttr('disabled');
 }
-// Running total implementation
 
+// Running total implementation
+const totalAmount = ({ isMainConf, isJSFramework, isExpress, isJSLibs, isNode, isBuildTools, isNpm }) => {
+    const totalParagraph = $('p#total');
+    const activities = $('fieldset.activities');
+    const workshopAmount =  (isJSFramework + isExpress + isJSLibs + isNode + isBuildTools + isNpm) * 100;
+    const amount = isMainConf ? 200 + workshopAmount : workshopAmount;
+    if (isMainConf | isJSFramework | isExpress | isJSLibs | isNode | isBuildTools | isNpm) {
+        totalParagraph.length === 1 ? totalParagraph.text(`Total: ${amount}$`) : activities.append($(`<p id='total' >Total: ${amount}$</p>`));
+    } else {
+        totalParagraph.remove();
+    }
+}
+
+// Eventhandler on fieldset
 $('fieldset.activities').change(() => {
     const elements = {
         mainCon: $("input[name=all]"),
@@ -83,6 +96,8 @@ $('fieldset.activities').change(() => {
         express: $("input[name=express]"),
         jsLibs: $("input[name=js-libs]"),
         node: $("input[name=node]"),
+        buildTools: $("input[name=build-tools]"),
+        npm: $("input[name=npm]"),
     }
 
     const booleans = {
@@ -91,8 +106,11 @@ $('fieldset.activities').change(() => {
         isExpress: elements.express.is(":checked"),
         isJSLibs: elements.jsLibs.is(":checked"),
         isNode: elements.node.is(":checked"),
+        isBuildTools: elements.buildTools.is(":checked"),
+        isNpm: elements.npm.is(":checked"),
     }
 
     checkBoxChecker({ ...elements, ...booleans });
+    totalAmount({...booleans});
 })
 
