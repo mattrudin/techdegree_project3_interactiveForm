@@ -155,7 +155,7 @@ const paymentBitcoin = () => {
 Form validation
 ************************************************************************************/
 $('button[type=submit]').on('click', (event) => {
-    if (!isNameValid() /*|| !isEmailValid() || !isActivitiesValid() || !isPaymentValid() */) event.preventDefault();
+    if (!isNameValid() || !isEmailValid() /*|| !isActivitiesValid() || !isPaymentValid() */) event.preventDefault();
 })
 
 const isNameValid = () => {
@@ -164,7 +164,8 @@ const isNameValid = () => {
 }
 
 const isEmailValid = () => {
-
+    const email = $('input#mail').val();
+    return /^[^@]+@[^@]+\.[a-z]+$/ig.test(email)
 }
 
 const isActivitiesValid = () => {
