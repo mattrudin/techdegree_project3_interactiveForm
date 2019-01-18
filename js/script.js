@@ -150,3 +150,27 @@ const paymentBitcoin = () => {
     $('div#paypal').hide();
     $('div#bitcoin').show();
 }
+
+/************************************************************************************
+Form validation
+************************************************************************************/
+$('button[type=submit]').on('click', (event) => {
+    if (!isNameValid() /*|| !isEmailValid() || !isActivitiesValid() || !isPaymentValid() */) event.preventDefault();
+})
+
+const isNameValid = () => {
+    const name = $('input#name').val();
+    return /^[A-Za-z]+$/.test(name);
+}
+
+const isEmailValid = () => {
+
+}
+
+const isActivitiesValid = () => {
+
+}
+
+const isPaymentValid = () => {
+
+}
