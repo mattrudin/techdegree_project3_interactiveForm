@@ -37,8 +37,8 @@ initialTshirt();
 
 // Eventhandler for the t-shirt design
 // Hides also the "select theme" option
-$('select#design').change(() => {
-    const design = $(event.target).val();
+$('select#design').change((event) => {
+    const design = event.target.value;
     $('option:contains("Select Theme")').hide();
     design === 'js puns' ? hideHeartJS() : hideJSPuns();
 })
@@ -127,3 +127,26 @@ const initialPayment = () => {
 
 initialPayment();
 
+// Eventhandler for payment options
+$('select#payment').change(() => {
+    const paymentMethod = event.target.value;
+    paymentMethod === 'credit card' ? paymentCredit() : paymentMethod === 'paypal' ? paymentPaypal() : paymentBitcoin();
+})
+
+const paymentCredit = () => {
+    $('div#credit-card').show();
+    $('div#paypal').hide();
+    $('div#bitcoin').hide();
+}
+
+const paymentPaypal = () => {
+    $('div#credit-card').hide();
+    $('div#paypal').show();
+    $('div#bitcoin').hide();
+}
+
+const paymentBitcoin = () => {
+    $('div#credit-card').hide();
+    $('div#paypal').hide();
+    $('div#bitcoin').show();
+}
