@@ -157,7 +157,7 @@ Form validation
 $('button[type=submit]').on('click', (event) => {
     const name = $('input#name').val();
     const email = $('input#mail').val();
-    if (!isNameValid(name) || !isEmailValid(email) /*|| !isActivitiesValid() || !isPaymentValid() */) event.preventDefault();
+    if (!isNameValid(name) || !isEmailValid(email) || !isActivitiesValid() /*|| !isPaymentValid() */) event.preventDefault();
 })
 
 const isNameValid = name => /^[A-Za-z]+$/.test(name);
@@ -165,7 +165,11 @@ const isNameValid = name => /^[A-Za-z]+$/.test(name);
 const isEmailValid = email => /^[^@]+@[^@]+\.[a-z]+$/ig.test(email);
 
 const isActivitiesValid = () => {
-
+    let isValid = false;
+    $('input[type=checkbox]').each(function () {
+        if (this.checked) isValid = true;
+    });
+    return isValid;
 }
 
 const isPaymentValid = () => {
