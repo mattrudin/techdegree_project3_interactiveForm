@@ -155,18 +155,14 @@ const paymentBitcoin = () => {
 Form validation
 ************************************************************************************/
 $('button[type=submit]').on('click', (event) => {
-    if (!isNameValid() || !isEmailValid() /*|| !isActivitiesValid() || !isPaymentValid() */) event.preventDefault();
+    const name = $('input#name').val();
+    const email = $('input#mail').val();
+    if (!isNameValid(name) || !isEmailValid(email) /*|| !isActivitiesValid() || !isPaymentValid() */) event.preventDefault();
 })
 
-const isNameValid = () => {
-    const name = $('input#name').val();
-    return /^[A-Za-z]+$/.test(name);
-}
+const isNameValid = name => /^[A-Za-z]+$/.test(name);
 
-const isEmailValid = () => {
-    const email = $('input#mail').val();
-    return /^[^@]+@[^@]+\.[a-z]+$/ig.test(email)
-}
+const isEmailValid = email => /^[^@]+@[^@]+\.[a-z]+$/ig.test(email);
 
 const isActivitiesValid = () => {
 
