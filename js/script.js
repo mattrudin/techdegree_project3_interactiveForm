@@ -114,3 +114,16 @@ $('fieldset.activities').change(() => {
     totalAmount({...booleans});
 })
 
+
+/************************************************************************************
+Payment info section
+************************************************************************************/
+const initialPayment = () => {
+    $('select#payment').val('credit card');
+    $('option[value=select_method]').hide();
+    $('div#paypal').hide();
+    $('div#bitcoin').hide();
+}
+
+initialPayment();
+
