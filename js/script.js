@@ -177,17 +177,11 @@ const isActivitiesValid = () => {
 
 const isCreditCardActive = () => $('div#credit-card').is(":visible");
 
-const isCreditCardNumberValid = creditNumber => {
+const isCreditCardNumberValid = creditNumber => /^[\d]{13,16}$/g.test(creditNumber);
 
-}
+const isCreditZipCodeValid = zipCode => /^[\d]{5}$/g.test(zipCode);
 
-const isCreditZipCodeValid = zipCode => {
-
-}
-
-const isCreditCvvValid = creditCvv => {
-
-}
+const isCreditCvvValid = creditCvv => /^[\d]{3}$/g.test(creditCvv);
 
 const isCreditCardValid = (creditNumber, zipCode, creditCvv) => 
     isCreditCardActive() && 
