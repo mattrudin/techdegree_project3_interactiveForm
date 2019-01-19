@@ -157,7 +157,10 @@ Form validation
 $('button[type=submit]').on('click', (event) => {
     const name = $('input#name').val();
     const email = $('input#mail').val();
-    if (!isNameValid(name) || !isEmailValid(email) || !isActivitiesValid() /*|| !isPaymentValid() */) event.preventDefault();
+    const creditNumber = $('input#cc-num');
+    const zipCode = $('input#zip');
+    const creditCvv = $('input#cvv');
+    if (!isNameValid(name) || !isEmailValid(email) || !isActivitiesValid() /*|| !isCreditCardValid(creditNumber, zipCode, creditCvv) */) event.preventDefault();
 })
 
 const isNameValid = name => /^[A-Za-z]+$/.test(name);
@@ -172,6 +175,23 @@ const isActivitiesValid = () => {
     return isValid;
 }
 
-const isPaymentValid = () => {
+const isCreditCardActive = () => $('div#credit-card').is(":visible");
+
+const isCreditCardNumberValid = creditNumber => {
 
 }
+
+const isCreditZipCodeValid = zipCode => {
+
+}
+
+const isCreditCvvValid = creditCvv => {
+
+}
+
+const isCreditCardValid = (creditNumber, zipCode, creditCvv) => 
+    isCreditCardActive() && 
+    isCreditCardNumberValid(creditNumber) && 
+    isCreditZipCodeValid(zipCode) && 
+    isCreditCvvValid(creditCvv) ? 
+    true : false;
