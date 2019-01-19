@@ -157,10 +157,10 @@ Form validation
 $('button[type=submit]').on('click', (event) => {
     const name = $('input#name').val();
     const email = $('input#mail').val();
-    const creditNumber = $('input#cc-num');
-    const zipCode = $('input#zip');
-    const creditCvv = $('input#cvv');
-    if (!isNameValid(name) || !isEmailValid(email) || !isActivitiesValid() /*|| !isCreditCardValid(creditNumber, zipCode, creditCvv) */) event.preventDefault();
+    const creditNumber = $('input#cc-num').val();
+    const zipCode = $('input#zip').val();
+    const creditCvv = $('input#cvv').val();
+    if (!isNameValid(name) || !isEmailValid(email) || !isActivitiesValid() || !isCreditCardValid(creditNumber, zipCode, creditCvv)) event.preventDefault();
 })
 
 const isNameValid = name => /^[A-Za-z]+$/.test(name);
