@@ -193,13 +193,29 @@ const isCreditCardValid = (creditNumber, zipCode, creditCvv) =>
 /************************************************************************************
 Form validation messages
 ************************************************************************************/
+const initialValidation = () => {
+    $('input').each(function(){
+        this.css('border-color', 'rgb(193, 222, 235)');
+    })
+}
+
+initialValidation();
+// Eventlistener for name input
 $('input#name').on('keyup', (event) => {
     const nameInput = $('input#name');
-    const message = $('p#name-message');
-    console.log(message)
-    if (isNameValid(event.target.value) && message) {
-        message.hide();
+    if (isNameValid(event.target.value)) {
+        nameInput.css('border-color', 'rgb(193, 222, 235)');
     } else {
-        nameInput.after($(`<p id='message-name' >Name is not valid. Only letters are valid.</p>`));
+        nameInput.css('border-color', 'red');
+    }
+})
+
+// Eventlistener for email input
+$('input#name').on('keyup', (event) => {
+    const emailInput = $('input#mail');
+    if (isEmailValid(event.target.value)) {
+        emailInput.css('border-color', 'rgb(193, 222, 235)');
+    } else {
+        emailInput.css('border-color', 'red');
     }
 })
