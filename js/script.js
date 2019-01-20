@@ -189,3 +189,17 @@ const isCreditCardValid = (creditNumber, zipCode, creditCvv) =>
     isCreditZipCodeValid(zipCode) && 
     isCreditCvvValid(creditCvv) ? 
     true : false;
+
+/************************************************************************************
+Form validation messages
+************************************************************************************/
+$('input#name').on('keyup', (event) => {
+    const nameInput = $('input#name');
+    const message = $('p#name-message');
+    console.log(message)
+    if (isNameValid(event.target.value) && message) {
+        message.hide();
+    } else {
+        nameInput.after($(`<p id='message-name' >Name is not valid. Only letters are valid.</p>`));
+    }
+})
