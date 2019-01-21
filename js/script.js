@@ -119,8 +119,7 @@ $('fieldset.activities').change(() => {
 Payment info section
 ************************************************************************************/
 const initialPayment = () => {
-    $('select#payment').val('credit card');
-    $('option[value=select_method]').hide();
+    $('div#credit-card').hide();
     $('div#paypal').hide();
     $('div#bitcoin').hide();
 }
@@ -129,6 +128,7 @@ initialPayment();
 
 // Eventhandler for payment options
 $('select#payment').change(() => {
+    $('option[value=select_method]').hide();
     const paymentMethod = event.target.value;
     paymentMethod === 'credit card' ? paymentCredit() : paymentMethod === 'paypal' ? paymentPaypal() : paymentBitcoin();
 })
@@ -141,14 +141,23 @@ const paymentCredit = () => {
 
 const paymentPaypal = () => {
     $('div#credit-card').hide();
+    clearCreditCard();
     $('div#paypal').show();
     $('div#bitcoin').hide();
 }
 
 const paymentBitcoin = () => {
     $('div#credit-card').hide();
+    clearCreditCard();
     $('div#paypal').hide();
     $('div#bitcoin').show();
+}
+
+// Clear function for credit card input
+const clearCreditCard = () => {
+   $('input#cc-num').val('');
+   $('input#zip').val('');
+   $('input#cvv').val('');
 }
 
 /************************************************************************************
@@ -160,7 +169,7 @@ $('button[type=submit]').on('click', (event) => {
     const creditNumber = $('input#cc-num').val();
     const zipCode = $('input#zip').val();
     const creditCvv = $('input#cvv').val();
-    if (!isNameValid(name) || !isEmailValid(email) || !isActivitiesValid() || !isCreditCardValid(creditNumber, zipCode, creditCvv)) event.preventDefault();
+    if (!isNameValid(name) || !isEmailValid(email) || !isActivitiesValid() || !isPaymentValid(creditNumber, zipCode, creditCvv)) event.preventDefault();
 })
 
 const isNameValid = name => /^[A-Za-z]+$/.test(name);
@@ -173,6 +182,11 @@ const isActivitiesValid = () => {
         if (this.checked) isValid = true;
     });
     return isValid;
+}
+
+const isPaymentValid = (creditNumber, zipCode, creditCvv) => {
+    const payment = $('select#payment').val();
+    return payment === 'credit card' && isCreditCardValid(creditNumber, zipCode, creditCvv) || payment === 'paypal' || payment === 'bitcoin' ? true : false;
 }
 
 const isCreditCardActive = () => $('div#credit-card').is(":visible");
