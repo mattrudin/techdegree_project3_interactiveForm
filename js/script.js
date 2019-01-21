@@ -51,7 +51,6 @@ const hideJSPuns = () => {
 
 // The following function will be invoked at page initialization and hides all t-shirts, because no design is selected 
 const initialTshirt = () => {
-    $('select#color').val(null);
     hideOptions('tomato','steelblue','dimgrey','cornflowerblue','darkslategrey','gold');
 }
 
@@ -180,6 +179,11 @@ $('button[type=submit]').on('click', (event) => {
     const creditCvv = $('input#cvv').val();
     const payment = $('select#payment').val();
     if (!isNameValid(name) || !isEmailValid(email) || !isActivitiesValid() || !isPaymentValid(creditNumber, zipCode, creditCvv)) {
+        alert(`The following inputs are invalid: 
+        ${isNameValid(name) ? "" : "Name"} 
+        ${isEmailValid(email) ? "" : "Email"} 
+        ${isActivitiesValid() ? "" : "Activities"} 
+        ${isPaymentValid(creditNumber, zipCode, creditCvv) ? "" : "Payment"}`);
         event.preventDefault();
     } else {
         alert(`Thank you ${name} for your participation! We will send an email with all details to ${email}.${payment === 'paypal' || payment === 'bitcoin' ? `You will be redirected to ${payment}` : ""}`)
