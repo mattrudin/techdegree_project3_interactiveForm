@@ -213,6 +213,16 @@ $('input#mail').on('keyup', (event) => {
     }
 })
 
+// Eventlistener for activities checkboxes
+$('fieldset.activities').change(() => {
+    const labels = $('fieldset.activities label');
+    if (isActivitiesValid()) {
+        labels.removeClass('not-valid-text');
+    } else {
+        labels.addClass('not-valid-text');
+    }
+})
+
 // Eventlistener for credit card number
 $('input#cc-num').on('keyup', (event) => {
     const creditCardInput = $('input#cc-num');

@@ -74,6 +74,7 @@ label {
 	color: #000;
 	display: block;
 	margin-bottom: .5em;
+	transition: color .2s;
 }
 
 input,
@@ -194,4 +195,8 @@ button:hover {
 
 .not-valid:focus {
 	border-color: red;
+}
+
+.not-valid-text {
+	color: red;
 }
