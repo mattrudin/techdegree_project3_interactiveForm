@@ -195,7 +195,6 @@ Form validation messages
 ************************************************************************************/
 // Eventlistener for name input
 $('input#name').on('keyup', (event) => {
-    console.log(event.target.value)
     const nameInput = $('input#name');
     if (isNameValid(event.target.value)) {
         nameInput.removeClass('not-valid');
@@ -206,11 +205,40 @@ $('input#name').on('keyup', (event) => {
 
 // Eventlistener for email input
 $('input#mail').on('keyup', (event) => {
-    console.log(event.target.value)
     const emailInput = $('input#mail');
     if (isEmailValid(event.target.value)) {
         emailInput.removeClass('not-valid');
     } else {
         emailInput.addClass('not-valid');
+    }
+})
+
+// Eventlistener for credit card number
+$('input#cc-num').on('keyup', (event) => {
+    const creditCardInput = $('input#cc-num');
+    if (isCreditCardNumberValid(event.target.value)) {
+        creditCardInput.removeClass('not-valid');
+    } else {
+        creditCardInput.addClass('not-valid');
+    }
+})
+
+// Eventlistener for zip code
+$('input#zip').on('keyup', (event) => {
+    const zipCodeInput = $('input#zip');
+    if (isCreditZipCodeValid(event.target.value)) {
+        zipCodeInput.removeClass('not-valid');
+    } else {
+        zipCodeInput.addClass('not-valid');
+    }
+})
+
+// Eventlistener for CVV number
+$('input#cvv').on('keyup', (event) => {
+    const cvvInput = $('input#cvv');
+    if (isCreditCvvValid(event.target.value)) {
+        cvvInput.removeClass('not-valid');
+    } else {
+        cvvInput.addClass('not-valid');
     }
 })
