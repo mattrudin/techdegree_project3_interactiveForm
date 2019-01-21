@@ -189,6 +189,7 @@ button:hover {
 /* ================================= 
   Validation classes
 ==================================== */
+/* classes for not valid input, will change the border */
 .not-valid {
 	border-color: red;
 }
@@ -197,6 +198,7 @@ button:hover {
 	border-color: red;
 }
 
+/* classes for not valid input, will change the text */
 .not-valid-text {
 	color: red;
 }

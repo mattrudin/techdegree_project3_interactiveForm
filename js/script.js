@@ -22,15 +22,37 @@ $('select#title').on('change', (event) => {
 /************************************************************************************
 T-Shirt info section
 ************************************************************************************/
-// The following function hides all t-shirts, because no design is selected 
+// Utility functions for show and hide options
+const hideOptions = (...args) => {
+    for(let i = 0; i < args.length; i++) {
+        $(`option[value=${args[i]}]`).hide();
+    }
+}
+
+const showOptions = (...args) => {
+    for(let i = 0; i < args.length; i++) {
+        $(`option[value=${args[i]}]`).show();
+    }
+}
+
+// Utility functions for the below event handler
+// Hides and shows selected options
+const hideHeartJS = () => {
+    $('select#color').val('cornflowerblue');
+    hideOptions('tomato','steelblue','dimgrey');
+    showOptions('cornflowerblue','darkslategrey','gold');
+}
+
+const hideJSPuns = () => {
+    $('select#color').val('tomato');
+    showOptions('tomato','steelblue','dimgrey');
+    hideOptions('cornflowerblue','darkslategrey','gold');
+}
+
+// The following function will be invoked at page initialization and hides all t-shirts, because no design is selected 
 const initialTshirt = () => {
     $('select#color').val(null);
-    $('option[value=tomato]').hide();
-    $('option[value=steelblue]').hide();
-    $('option[value=dimgrey').hide();
-    $('option[value=cornflowerblue]').hide();
-    $('option[value=darkslategrey]').hide();
-    $('option[value=gold]').hide();
+    hideOptions('tomato','steelblue','dimgrey','cornflowerblue','darkslategrey','gold');
 }
 
 initialTshirt();
@@ -43,31 +65,11 @@ $('select#design').change((event) => {
     design === 'js puns' ? hideHeartJS() : hideJSPuns();
 })
 
-// Utility functions for the above event handler
-const hideHeartJS = () => {
-    $('select#color').val('cornflowerblue');
-    $('option[value=tomato]').hide();
-    $('option[value=steelblue]').hide();
-    $('option[value=dimgrey').hide();
-    $('option[value=cornflowerblue]').show();
-    $('option[value=darkslategrey]').show();
-    $('option[value=gold]').show();
-}
-
-const hideJSPuns = () => {
-    $('select#color').val('tomato');
-    $('option[value=tomato]').show();
-    $('option[value=steelblue]').show();
-    $('option[value=dimgrey').show();
-    $('option[value=cornflowerblue]').hide();
-    $('option[value=darkslategrey]').hide();
-    $('option[value=gold]').hide();
-}
-
 /************************************************************************************
 Register for activities section
 ************************************************************************************/
 // Checkbox checker function
+// Disables and enables checkboxes according day and time
 const checkBoxChecker = ({ jsFramework, express, jsLibs, node, isJSFramework, isExpress, isJSLibs, isNode }) => {
     isJSFramework ? express.attr('disabled', true) : express.removeAttr('disabled');
     isExpress ? jsFramework.attr('disabled', true) : jsFramework.removeAttr('disabled');
@@ -75,7 +77,7 @@ const checkBoxChecker = ({ jsFramework, express, jsLibs, node, isJSFramework, is
     isNode ? jsLibs.attr('disabled', true) : jsLibs.removeAttr('disabled');
 }
 
-// Running total implementation
+// Running total implementation at the end of the activities section (no obtrusive javascript support)
 const totalAmount = ({ isMainConf, isJSFramework, isExpress, isJSLibs, isNode, isBuildTools, isNpm }) => {
     const totalParagraph = $('p#total');
     const activities = $('fieldset.activities');
@@ -88,7 +90,7 @@ const totalAmount = ({ isMainConf, isJSFramework, isExpress, isJSLibs, isNode, i
     }
 }
 
-// Eventhandler on fieldset
+// Eventhandler on fieldset for checking the checkboxes and total amount
 $('fieldset.activities').change(() => {
     const elements = {
         mainCon: $("input[name=all]"),
@@ -118,6 +120,7 @@ $('fieldset.activities').change(() => {
 /************************************************************************************
 Payment info section
 ************************************************************************************/
+// Hides all payment information at page initialization
 const initialPayment = () => {
     $('div#credit-card').hide();
     $('div#paypal').hide();
@@ -133,12 +136,15 @@ $('select#payment').change(() => {
     paymentMethod === 'credit card' ? paymentCredit() : paymentMethod === 'paypal' ? paymentPaypal() : paymentBitcoin();
 })
 
+// Utility functions for the eventhandler
+// Shows only the credit card info
 const paymentCredit = () => {
     $('div#credit-card').show();
     $('div#paypal').hide();
     $('div#bitcoin').hide();
 }
 
+// Shows only the paypal info and clears credit card input
 const paymentPaypal = () => {
     $('div#credit-card').hide();
     clearCreditCard();
@@ -146,6 +152,7 @@ const paymentPaypal = () => {
     $('div#bitcoin').hide();
 }
 
+// Shows only the bitcoin info and clears credit card input
 const paymentBitcoin = () => {
     $('div#credit-card').hide();
     clearCreditCard();
@@ -163,6 +170,8 @@ const clearCreditCard = () => {
 /************************************************************************************
 Form validation
 ************************************************************************************/
+// Eventhandler for the submit button
+// Will not submit if any of the given inputs is empty / false
 $('button[type=submit]').on('click', (event) => {
     const name = $('input#name').val();
     const email = $('input#mail').val();
@@ -177,6 +186,7 @@ $('button[type=submit]').on('click', (event) => {
     }
 })
 
+// Validation functions for the user input
 const isNameValid = name => /^[A-Za-z]+$/.test(name);
 
 const isEmailValid = email => /^[^@]+@[^@]+\.[a-z]+$/ig.test(email);
@@ -212,7 +222,7 @@ const isCreditCardValid = (creditNumber, zipCode, creditCvv) =>
 /************************************************************************************
 Form validation messages
 ************************************************************************************/
-// Eventlistener for name input
+// Eventlistener for name input, will change the border to red if the input is not valid
 $('input#name').on('keyup', (event) => {
     const nameInput = $('input#name');
     if (isNameValid(event.target.value)) {
@@ -222,7 +232,7 @@ $('input#name').on('keyup', (event) => {
     }
 })
 
-// Eventlistener for email input
+// Eventlistener for email input, will change the border to red if the input is not valid
 $('input#mail').on('keyup', (event) => {
     const emailInput = $('input#mail');
     if (isEmailValid(event.target.value)) {
@@ -232,7 +242,7 @@ $('input#mail').on('keyup', (event) => {
     }
 })
 
-// Eventlistener for activities checkboxes
+// Eventlistener for activities checkboxes, will change the text to red if the input is not valid
 $('fieldset.activities').change(() => {
     const labels = $('fieldset.activities label');
     if (isActivitiesValid()) {
@@ -242,7 +252,7 @@ $('fieldset.activities').change(() => {
     }
 })
 
-// Eventlistener for credit card number
+// Eventlistener for credit card number, will change the border to red if the input is not valid
 $('input#cc-num').on('keyup', (event) => {
     const creditCardInput = $('input#cc-num');
     if (isCreditCardNumberValid(event.target.value)) {
@@ -252,7 +262,7 @@ $('input#cc-num').on('keyup', (event) => {
     }
 })
 
-// Eventlistener for zip code
+// Eventlistener for zip code, will change the border to red if the input is not valid
 $('input#zip').on('keyup', (event) => {
     const zipCodeInput = $('input#zip');
     if (isCreditZipCodeValid(event.target.value)) {
@@ -262,7 +272,7 @@ $('input#zip').on('keyup', (event) => {
     }
 })
 
-// Eventlistener for CVV number
+// Eventlistener for CVV number, will change the border to red if the input is not valid
 $('input#cvv').on('keyup', (event) => {
     const cvvInput = $('input#cvv');
     if (isCreditCvvValid(event.target.value)) {
