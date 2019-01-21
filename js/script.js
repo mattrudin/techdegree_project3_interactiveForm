@@ -169,7 +169,12 @@ $('button[type=submit]').on('click', (event) => {
     const creditNumber = $('input#cc-num').val();
     const zipCode = $('input#zip').val();
     const creditCvv = $('input#cvv').val();
-    if (!isNameValid(name) || !isEmailValid(email) || !isActivitiesValid() || !isPaymentValid(creditNumber, zipCode, creditCvv)) event.preventDefault();
+    const payment = $('select#payment').val();
+    if (!isNameValid(name) || !isEmailValid(email) || !isActivitiesValid() || !isPaymentValid(creditNumber, zipCode, creditCvv)) {
+        event.preventDefault();
+    } else {
+        alert(`Thank you ${name} for your participation! We will send an email with all details to ${email}.${payment === 'paypal' || payment === 'bitcoin' ? `You will be redirected to ${payment}` : ""}`)
+    }
 })
 
 const isNameValid = name => /^[A-Za-z]+$/.test(name);
